@@ -1,0 +1,8 @@
+.{
+    .name = .glfw,
+    .version = "3.6.0",
+    .dependencies = .{},
+    .minimum_zig_version = "0.16.0",
+    .paths = .{""},
+    .fingerprint = 0x3bbe0a5c509bff8c,
+}
