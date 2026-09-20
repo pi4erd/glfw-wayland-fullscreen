@@ -554,6 +554,13 @@ GLFWAPI struct wl_output* glfwGetWaylandMonitor(GLFWmonitor* monitor);
  *  @ingroup native
  */
 GLFWAPI struct wl_surface* glfwGetWaylandWindow(GLFWwindow* window);
+
+/*! @brief Changes the fullscreen state of the specified wayland window.
+ *  WARNING: This function is experimental. Don't use it please, just build a proper fix.
+ * 
+ *  @ingroup native
+ */
+GLFWAPI void glfwSetWaylandWindowFullscreen(GLFWwindow* window, int fullscreen);
 #endif
 
 #if defined(GLFW_EXPOSE_NATIVE_EGL)

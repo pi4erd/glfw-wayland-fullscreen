@@ -36,6 +36,7 @@ add_executable(triangle-opengl WIN32 MACOSX_BUNDLE triangle-opengl.c ${ICON} ${G
 add_executable(triangle-opengles WIN32 MACOSX_BUNDLE triangle-opengles.c ${ICON} ${GLAD_GLES2})
 add_executable(wave WIN32 MACOSX_BUNDLE wave.c ${ICON} ${GLAD_GL})
 add_executable(windows WIN32 MACOSX_BUNDLE windows.c ${ICON} ${GLAD_GL})
+add_executable(wayland_fullscreen wayland_fullscreen.c ${ICON} ${GLAD_GL})
 
 target_link_libraries(particles Threads::Threads)
 if (RT_LIBRARY)

@@ -3616,5 +3616,36 @@ GLFWAPI struct wl_surface* glfwGetWaylandWindow(GLFWwindow* handle)
     return window->wl.surface;
 }
 
+GLFWAPI void glfwSetWaylandWindowFullscreen(GLFWwindow *handle, int fullscreen) {
+    _GLFW_REQUIRE_INIT();
+
+    if(_glfw.platform.platformID != GLFW_PLATFORM_WAYLAND) {
+        _glfwInputError(GLFW_PLATFORM_UNAVAILABLE,
+                        "Wayland: Platform not initialized");
+        return;
+    }
+
+    _GLFWwindow *window = (_GLFWwindow*)handle;
+    assert(window != NULL);
+
+    // TODO: Check curren fullscreen state
+    if(window->wl.libdecor.frame != NULL) {
+        if(fullscreen) {
+            libdecor_frame_set_fullscreen(window->wl.libdecor.frame, NULL);
+        } else {
+            libdecor_frame_unset_fullscreen(window->wl.libdecor.frame);
+        }
+    } else {
+        struct xdg_toplevel *toplevel = window->wl.xdg.toplevel;
+        if(toplevel == NULL) return;
+
+        if(fullscreen == GLFW_TRUE) {
+            xdg_toplevel_set_fullscreen(toplevel, NULL);
+        } else {
+            xdg_toplevel_unset_fullscreen(toplevel);
+        }
+    }
+}
+
 #endif // _GLFW_WAYLAND
 
