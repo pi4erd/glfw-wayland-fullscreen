@@ -5,6 +5,7 @@ pub fn build(b: *std.Build) void {
     
     const build_dir = b.cache_root.join(b.allocator, &.{"glfw-cmake"}) catch @panic("OOM");
     const lib_path = b.pathJoin(&.{ build_dir, "src", "libglfw3.a" });
+    const include_dir = b.path("include/");
 
     const build_type = switch (optimize) {
         .Debug => "Debug",
@@ -32,4 +33,5 @@ pub fn build(b: *std.Build) void {
 
     const lib_lp: std.Build.LazyPath = .{ .generated = .{ .file = lib }};
     b.addNamedLazyPath("glfw", lib_lp);
+    b.addNamedLazyPath("glfw-include", include_dir);
 }
