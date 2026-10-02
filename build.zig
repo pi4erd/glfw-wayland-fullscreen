@@ -118,6 +118,7 @@ pub fn build(b: *std.Build) void {
 
             glfw.linkFramework("Cocoa", .{});
             glfw.linkFramework("IOKit", .{});
+            glfw.linkFramework("QuartzCore", .{});
             glfw.linkFramework("CoreFoundation", .{});
             glfw.linkFramework("CoreVideo", .{});
         },
