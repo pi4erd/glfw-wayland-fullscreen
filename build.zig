@@ -5,8 +5,18 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
     const target = b.standardTargetOptions(.{});
 
-    const build_wayland = b.option(bool, "build_wayland", "Builds wayland support for linux platform") orelse true;
-    const build_x11 = b.option(bool, "build_x11", "Builds x11 support for linux platform") orelse true;
+    const platform = target.query.os_tag orelse builtin.target.os.tag;
+
+    if (target.query.os_tag != null) {
+        // assume os_tag == null if native, as documented
+        std.log.warn("Cross-compiling. This action isn't supported or tested. " ++
+            "Compile at your own risk.", .{});
+    }
+
+    const build_wayland = b.option(bool, "build_wayland", "Builds wayland support for linux platform")
+        orelse (platform == .linux);
+    const build_x11 = b.option(bool, "build_x11", "Builds x11 support for linux platform")
+        orelse (platform == .linux);
     const build_dynamic = b.option(bool, "build_dynamic", "Builds a dynamic library") orelse false;
 
     const src_dir = b.path("src/");
@@ -135,14 +145,6 @@ pub fn build(b: *std.Build) void {
         .language = .c,
         .root = src_dir,
     });
-
-    const platform = target.query.os_tag orelse builtin.target.os.tag;
-
-    if (target.query.os_tag != null) {
-        // assume os_tag == null, as documented
-        std.log.warn("Cross-compiling. This action isn't supported or tested. " ++
-            "Compile at your own risk.", .{});
-    }
 
     std.log.info("Building GLFW for platform {}", .{platform});
 
